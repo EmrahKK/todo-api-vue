@@ -1,5 +1,6 @@
 <template>
   <div class="hello" v-bind:class="{loading: isLoading}">
+    <div class="alert alert-danger" v-if="errorMessage">{{ errorMessage }}</div>
     <h1>Todo list</h1>
     <div id="todoList">
       <div class="loadingElement" v-bind:class="{loading: isLoading}">Loading...</div>
@@ -46,7 +47,9 @@ export default {
   computed: mapGetters([
     'todoList',
     'newTodoName',
-    'isLoading'
+    'isLoading',
+    'isErrored',
+    'errorMessage'
   ]),
   name: 'Todo',
   methods: mapActions([
@@ -69,6 +72,7 @@ export default {
 }
 
 .hello {
+  padding: 8pt;
   #todoList {
     transition: 1s;
     position: relative;

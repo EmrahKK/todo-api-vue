@@ -4,13 +4,16 @@ import * as mutation from '../mutation-types'
 const state = {
   todo: [],
   newTodoName: '',
-  isLoading: true
+  isLoading: true,
+  isErrored: false,
+  errorMessage: ''
 }
 
 const getters = {
   todoList: state => state.todo,
   newTodoName: state => state.newTodoName,
-  isLoading: state => state.isLoading
+  isLoading: state => state.isLoading,
+  errorMessage: state => state.errorMessage
 }
 
 const mutations = {
@@ -28,6 +31,10 @@ const mutations = {
 
   [mutation.IS_LOADING_TODOS] (state, isLoading) {
     state.isLoading = isLoading
+  },
+
+  [mutation.ERROR_HAPPENED] (state, errorMessage) {
+    state.errorMessage = errorMessage
   }
 }
 
@@ -39,6 +46,10 @@ const actions = {
       (response) => {
         commit(mutation.IS_LOADING_TODOS, false)
         commit(mutation.GET_TODO_LIST, response.body)
+      },
+      (e) => {
+        commit(mutation.ERROR_HAPPENED, 'There was a problem while connecting to the server.')
+        console.log(e)
       }
     )
   },
