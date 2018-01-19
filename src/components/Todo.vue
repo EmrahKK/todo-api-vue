@@ -9,20 +9,19 @@
           <input
             class="form-control"
             :value="newTodoName"
-            @input="updateNewTodoName"
+            @input="(e) => updateNewTodoName(e)"
             :disabled="isLoading" />
           <button
             class="btn btn-primary"
             :disabled="isLoading"
-            v-on:click="addTodo">Set new todo</button>
+            @click="addTodo()">Set new todo</button>
         </div>
       </form>
       <ul>
-        <li v-for="(item, index) in todoList">
+        <li v-for="item in todoList">
           <label>
             <input
-              v-on:change="toggleTodo"
-              :data-todo-index="index"
+              @change="(e) => toggleTodo({ item, e })"
               type="checkbox" :checked="item.isComplete" />
             <span v-bind:class="{tacher: item.isComplete}">
               {{ item.name }}
@@ -30,8 +29,7 @@
           </label>
           <button
             class="btn btn-xs btn-danger"
-            v-on:click="removeTodo"
-            :data-todo-id="item.id">X</button>
+            @click="removeTodo(item)">X</button>
         </li>
       </ul>
     </div>
@@ -67,15 +65,14 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
-.tacher {
-  text-decoration: line-through;
-}
-
 .hello {
   padding: 8pt;
   #todoList {
     transition: 1s;
     position: relative;
+    text-align: left;
+    max-width: 320pt;
+    margin: auto;
 
     .loadingElement {
       font-size: 0.8em;
@@ -92,6 +89,65 @@ export default {
       opacity: 0;
       transition: 1s;
     }
+
+    .flexible {
+      display: flex;
+
+      .form-control {
+        margin-right: 4pt;
+      }
+    }
+
+    .form-group {
+      input, button {
+          transition: 1s;
+      }
+
+    }
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      li {
+        margin: 0;
+        padding: 0;
+        font-size: 12pt;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 0pt;
+        margin-top: 4pt;
+        border-bottom: 1px solid #f3f3f3;
+        line-height: 21pt;
+
+        &:first-child {
+          border-top: 1px solid #f3f3f3;
+          padding-top: 4pt;
+        }
+
+        label {
+          cursor: pointer;
+
+          input[type="checkbox"] {
+            display: none;
+          }
+
+          span {
+            transition: .3s;
+
+            &.tacher {
+              text-decoration: line-through;
+              opacity: .6;
+            }
+          }
+
+        }
+
+        button {
+          width: 20pt;
+          height: 20pt;
+        }
+      }
+    }
   }
 
   &.loading #todoList {
@@ -103,63 +159,6 @@ export default {
 
   &.loading {
     position: relative;
-  }
-}
-
-
-#todoList {
-  text-align: left;
-  max-width: 320pt;
-  margin: auto;
-
-  .flexible {
-    display: flex;
-
-    .form-control {
-      margin-right: 4pt;
-    }
-  }
-
-  .form-group {
-    input, button {
-        transition: 1s;
-    }
-  }
-
-
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    li {
-      margin: 0;
-      padding: 0;
-      font-size: 12pt;
-      display: flex;
-      justify-content: space-between;
-      padding-bottom: 0pt;
-      margin-top: 4pt;
-      border-bottom: 1px solid #f3f3f3;
-      line-height: 21pt;
-
-      &:first-child {
-        border-top: 1px solid #f3f3f3;
-        padding-top: 4pt;
-      }
-
-      label {
-        cursor: pointer;
-
-        input[type="checkbox"] {
-          display: none;
-        }
-      }
-
-      button {
-        width: 20pt;
-        height: 20pt;
-      }
-    }
   }
 }
 </style>

@@ -40,18 +40,19 @@ const mutations = {
 
 const actions = {
   getTodos: ({commit}) => {
+    const onSuccess = (response) => {
+      commit(mutation.IS_LOADING_TODOS, false)
+      commit(mutation.GET_TODO_LIST, response.body)
+    }
+
+    const onError = (e) => {
+      commit(mutation.ERROR_HAPPENED, 'There was a problem.')
+      console.log(e)
+    }
+
     commit(mutation.IS_LOADING_TODOS, true)
 
-    todoApi.getTodos(
-      (response) => {
-        commit(mutation.IS_LOADING_TODOS, false)
-        commit(mutation.GET_TODO_LIST, response.body)
-      },
-      (e) => {
-        commit(mutation.ERROR_HAPPENED, 'There was a problem while connecting to the server.')
-        console.log(e)
-      }
-    )
+    todoApi.getTodos(onSuccess, onError)
   },
 
   addTodo: ({dispatch, commit, state}) => {
@@ -60,26 +61,21 @@ const actions = {
       return
     }
 
-    todoApi.addTodo(
-      {'name': state.newTodoName, 'isCompleted': false},
-      () => {
-        commit(mutation.CLEAR_NEW_TODO_NAME)
-        dispatch('getTodos')
-      }
-    )
+    const onSuccess = () => {
+      commit(mutation.CLEAR_NEW_TODO_NAME)
+      dispatch('getTodos')
+    }
+
+    todoApi.addTodo({'name': state.newTodoName, 'isCompleted': false}, onSuccess)
   },
 
-  removeTodo: ({dispatch, commit}, e) => {
-    todoApi.removeTodo(
-      e.target.dataset.todoId, () => dispatch('getTodos')
-    )
+  removeTodo: ({ dispatch, commit }, item) => {
+    todoApi.removeTodo(item.id, () => dispatch('getTodos'))
   },
 
-  toggleTodo: ({dispatch, commit, state}, e) => {
-    let todoItem = state.todo[e.target.dataset.todoIndex]
-
+  toggleTodo: ({ dispatch, commit, state }, { item, e }) => {
     todoApi.toggleTodo(
-        {'id': todoItem.id, 'name': todoItem.name, 'isComplete': e.target.checked},
+        {'id': item.id, 'name': item.name, 'isComplete': e.target.checked},
         () => dispatch('getTodos')
     )
   },
