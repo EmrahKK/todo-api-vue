@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <IsLoading />
+    <Notification />
     <router-view/>
   </div>
 </template>
@@ -10,11 +11,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import IsLoading from './components/IsLoading'
+import Notification from './components/Notification'
 
 export default {
   name: 'app',
   components: {
-    IsLoading
+    IsLoading,
+    Notification
   }
 }
 </script>

@@ -3,15 +3,12 @@ import * as mutation from '../mutation-types'
 
 const state = {
   todo: [],
-  newTodoName: '',
-  isErrored: false,
-  errorMessage: ''
+  newTodoName: ''
 }
 
 const getters = {
   todoList: state => state.todo,
-  newTodoName: state => state.newTodoName,
-  errorMessage: state => state.errorMessage
+  newTodoName: state => state.newTodoName
 }
 
 const mutations = {
@@ -25,22 +22,20 @@ const mutations = {
 
   [mutation.CLEAR_NEW_TODO_NAME] (state) {
     state.newTodoName = ''
-  },
-
-  [mutation.ERROR_HAPPENED] (state, errorMessage) {
-    state.errorMessage = errorMessage
   }
 }
 
 const actions = {
-  getTodos: ({commit}) => {
+  getTodos: ({commit, dispatch}) => {
     const onSuccess = (response) => {
       commit(mutation.IS_LOADING_TODOS, false)
       commit(mutation.GET_TODO_LIST, response.body)
+
+      dispatch('showNotification', { mutationType: mutation.SHOW_INFO_NOTIFICATION, message: 'Loaded TODO list' })
     }
 
     const onError = (e) => {
-      commit(mutation.ERROR_HAPPENED, 'There was a problem.')
+      dispatch('showNotification', { mutationType: mutation.SHOW_ERROR_NOTIFICATION, message: 'Something is wrong' })
       console.log(e)
     }
 
