@@ -42,6 +42,7 @@ export default {
 
   input, button {
       transition: 1s;
+      transition-delay: .5s;
   }
 }
 </style>

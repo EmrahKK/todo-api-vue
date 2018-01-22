@@ -75,6 +75,7 @@ ul {
       width: 20pt;
       height: 20pt;
       transition: .3s;
+      transition-delay: .5s;
     }
   }
 }
