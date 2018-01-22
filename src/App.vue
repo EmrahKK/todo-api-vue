@@ -1,12 +1,21 @@
 <template>
   <div id="app">
+    <IsLoading />
     <router-view/>
   </div>
 </template>
 
 <script>
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+import IsLoading from './components/IsLoading'
+
 export default {
-  name: 'app'
+  name: 'app',
+  components: {
+    IsLoading
+  }
 }
 </script>
 

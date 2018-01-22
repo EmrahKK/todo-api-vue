@@ -4,7 +4,6 @@ import * as mutation from '../mutation-types'
 const state = {
   todo: [],
   newTodoName: '',
-  isLoading: true,
   isErrored: false,
   errorMessage: ''
 }
@@ -12,7 +11,6 @@ const state = {
 const getters = {
   todoList: state => state.todo,
   newTodoName: state => state.newTodoName,
-  isLoading: state => state.isLoading,
   errorMessage: state => state.errorMessage
 }
 
@@ -27,10 +25,6 @@ const mutations = {
 
   [mutation.CLEAR_NEW_TODO_NAME] (state) {
     state.newTodoName = ''
-  },
-
-  [mutation.IS_LOADING_TODOS] (state, isLoading) {
-    state.isLoading = isLoading
   },
 
   [mutation.ERROR_HAPPENED] (state, errorMessage) {
@@ -66,14 +60,17 @@ const actions = {
       dispatch('getTodos')
     }
 
+    commit(mutation.IS_LOADING_TODOS, true)
     todoApi.addTodo({'name': state.newTodoName, 'isCompleted': false}, onSuccess)
   },
 
   removeTodo: ({ dispatch, commit }, item) => {
+    commit(mutation.IS_LOADING_TODOS, true)
     todoApi.removeTodo(item.id, () => dispatch('getTodos'))
   },
 
   toggleTodo: ({ dispatch, commit, state }, { item, e }) => {
+    commit(mutation.IS_LOADING_TODOS, true)
     todoApi.toggleTodo(
         {'id': item.id, 'name': item.name, 'isComplete': e.target.checked},
         () => dispatch('getTodos')
