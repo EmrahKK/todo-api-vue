@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="main">
-      <div class="alert alert-danger" v-if="errorMessage">{{ errorMessage }}</div>
       <h1>Todo list</h1>
       <div class="content">
         <TodoForm />
@@ -12,16 +11,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapActions } from 'vuex'
 import TodoList from './Todo/TodoList'
 import TodoForm from './Todo/TodoForm'
 
 export default {
   name: 'Todo',
-
-  computed: mapGetters([
-    'errorMessage'
-  ]),
 
   methods: mapActions([
     'getTodos'
