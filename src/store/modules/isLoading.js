@@ -1,7 +1,7 @@
 import * as mutation from '../mutation-types'
 
 const state = {
-  isLoading: true
+  isLoading: false
 }
 
 const getters = {
