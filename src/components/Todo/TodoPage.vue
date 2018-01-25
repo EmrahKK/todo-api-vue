@@ -12,8 +12,8 @@
 
 <script>
 import { mapActions } from 'vuex'
-import TodoList from './Todo/TodoList'
-import TodoForm from './Todo/TodoForm'
+import TodoList from '@/components/Todo/TodoList'
+import TodoForm from '@/components/Todo/TodoForm'
 
 export default {
   name: 'Todo',

@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <Navigation />
+    <MainMenu />
     <IsLoading />
-    <Notification />
+    <Alert />
     <router-view/>
   </div>
 </template>
@@ -11,16 +11,16 @@
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-import IsLoading from './components/IsLoading'
-import Notification from './components/Notification'
-import Navigation from './components/Navigation'
+import IsLoading from '@/components/Common/Notification/IsLoading'
+import Alert from '@/components/Common/Notification/Alert'
+import MainMenu from '@/components/Common/Navigation/MainMenu'
 
 export default {
   name: 'app',
   components: {
     IsLoading,
-    Notification,
-    Navigation
+    Alert,
+    MainMenu
   }
 }
 </script>
