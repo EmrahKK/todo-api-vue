@@ -1,4 +1,4 @@
-import todoApi from './../../../api/todo'
+import todoApi from './../../api/todo'
 import * as mutation from '../mutation-types'
 
 const state = {

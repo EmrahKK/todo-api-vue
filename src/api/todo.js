@@ -9,10 +9,6 @@ export default {
     Vue.http.get(`${endpoint}/todo`).then(onSuccess).catch(onError)
   },
 
-  getFilteredTodos (filter, onSuccess, onError = onDefaultError) {
-    Vue.http.get(`${endpoint}/todo/${filter}`).then(onSuccess).catch(onError)
-  },
-
   addTodo (payload, onSuccess, onError = onDefaultError) {
     Vue.http.post(`${endpoint}/todo`, payload).then(onSuccess).catch(onError)
   },
