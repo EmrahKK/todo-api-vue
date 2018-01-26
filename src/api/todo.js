@@ -1,6 +1,15 @@
 import Vue from 'vue'
 
-const endpoint = 'http://localhost:59044/api'
+var getApiEndpoint = () => {
+  switch (process.env.NODE_ENV) {
+    case 'production':
+      return 'http://localhost:59044/api'
+    case 'development':
+      return 'http://localhost:59044/api'
+  }
+}
+
+const endpoint = getApiEndpoint()
 
 const onDefaultError = (e) => console.error(e)
 

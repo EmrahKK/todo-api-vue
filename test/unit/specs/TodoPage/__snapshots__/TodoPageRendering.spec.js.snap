@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Todo page component rendering: Renders todo page with no results 1`] = `
+<div>
+    <div class="main">
+        <h1>Todo list</h1>
+        <div class="content">
+            <form>
+                <div class="form-group flexible">
+                    <input class="form-control">
+                    <button class="btn btn-primary">Set new todo</button>
+                </div>
+            </form>
+            <ul></ul>
+        </div>
+    </div>
+</div>
+`;
+
+exports[`Todo page component rendering: Should disable input and buttons when is on loading state 1`] = `
+<div>
+    <div class="main">
+        <h1>Todo list</h1>
+        <div class="content">
+            <form>
+                <div class="form-group flexible">
+                    <input disabled="disabled" class="form-control">
+                    <button disabled="disabled" class="btn btn-primary">Set new todo</button>
+                </div>
+            </form>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="">
+        Hacer la colada oscura
+      </span></label>
+                    <button disabled="disabled" class="btn btn-xs btn-danger">X</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+`;
+
+exports[`Todo page component rendering: Should have some list items 1`] = `
+<div>
+    <div class="main">
+        <h1>Todo list</h1>
+        <div class="content">
+            <form>
+                <div class="form-group flexible">
+                    <input class="form-control">
+                    <button class="btn btn-primary">Set new todo</button>
+                </div>
+            </form>
+            <ul>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="">
+        Hacer la colada oscura
+      </span></label>
+                    <button class="btn btn-xs btn-danger">X</button>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="tacher">
+        Comprar matadinosaurios
+      </span></label>
+                    <button class="btn btn-xs btn-danger">X</button>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="">
+        Barrer el suelanis
+      </span></label>
+                    <button class="btn btn-xs btn-danger">X</button>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="tacher">
+        foobaris
+      </span></label>
+                    <button class="btn btn-xs btn-danger">X</button>
+                </li>
+                <li>
+                    <label>
+                        <input type="checkbox"> <span class="">
+        Urujai
+      </span></label>
+                    <button class="btn btn-xs btn-danger">X</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+`;
