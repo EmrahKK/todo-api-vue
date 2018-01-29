@@ -6,6 +6,8 @@ var getApiEndpoint = () => {
       return 'http://localhost:59044/api'
     case 'development':
       return 'http://localhost:59044/api'
+    case 'test':
+      return '/mockApi'
   }
 }
 

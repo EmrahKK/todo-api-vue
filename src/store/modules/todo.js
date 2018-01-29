@@ -25,58 +25,104 @@ const mutations = {
   }
 }
 
-const defaultOnError = (e) => { console.error(e) }
-
 const actions = {
   getTodos: ({commit, dispatch}) => {
-    const onSuccess = (response) => {
-      commit(mutation.IS_LOADING_TODOS, false)
-      commit(mutation.GET_TODO_LIST, response.body)
+    return new Promise((resolve, reject) => {
+      const onSuccess = (response) => {
+        commit(mutation.IS_LOADING_TODOS, false)
+        commit(mutation.GET_TODO_LIST, response.body)
 
-      dispatch('showNotification', { mutationType: mutation.SHOW_INFO_NOTIFICATION, message: 'Loaded TODO list' })
-    }
+        dispatch('showNotification', {
+          mutationType: mutation.SHOW_INFO_NOTIFICATION, message: 'Loaded TODO list'
+        })
 
-    const onError = (e) => {
-      dispatch('showNotification', { mutationType: mutation.SHOW_ERROR_NOTIFICATION, message: 'Something is wrong' })
-      console.log(e)
-    }
+        resolve(response)
+      }
 
-    commit(mutation.IS_LOADING_TODOS, true)
+      const onError = (e) => {
+        dispatch('showNotification', {
+          mutationType: mutation.SHOW_ERROR_NOTIFICATION, message: 'Something is wrong'
+        })
 
-    todoApi.getTodos().then(onSuccess).catch(onError)
+        reject(e)
+      }
+
+      commit(mutation.IS_LOADING_TODOS, true)
+
+      todoApi.getTodos()
+        .then(onSuccess)
+        .catch(onError)
+    })
   },
 
   addTodo: ({dispatch, commit, state}) => {
-    if (state.newTodoName.length < 1) {
-      alert('must put a todo name')
-      return
-    }
+    return new Promise((resolve, reject) => {
+      if (state.newTodoName.length < 1) {
+        alert('must put a todo name')
+        reject(new Error('Must put a todo name'))
+        return
+      }
 
-    const onSuccess = () => {
-      commit(mutation.CLEAR_NEW_TODO_NAME)
-      dispatch('getTodos')
-    }
+      const onSuccess = (response) => {
+        commit(mutation.CLEAR_NEW_TODO_NAME)
+        dispatch('getTodos')
+        resolve(response)
+      }
 
-    commit(mutation.IS_LOADING_TODOS, true)
-    todoApi.addTodo({'name': state.newTodoName, 'isCompleted': false})
-      .then(onSuccess)
-      .catch(defaultOnError)
+      const requestBody = {'name': state.newTodoName, 'isCompleted': false}
+
+      commit(mutation.IS_LOADING_TODOS, true)
+
+      todoApi.addTodo(requestBody)
+        .then(onSuccess)
+        .catch((e) => { reject(e) })
+    })
   },
 
   removeTodo: ({ dispatch, commit }, item) => {
-    commit(mutation.IS_LOADING_TODOS, true)
-    todoApi.removeTodo(item.id).then(() => dispatch('getTodos')).catch(defaultOnError)
+    return new Promise((resolve, reject) => {
+      const onSuccess = (response) => {
+        dispatch('getTodos')
+        resolve(response)
+      }
+
+      commit(mutation.IS_LOADING_TODOS, true)
+
+      todoApi.removeTodo(item.id)
+        .then(onSuccess)
+        .catch((e) => { reject(e) })
+    })
   },
 
   toggleTodo: ({ dispatch, commit, state }, { item, e }) => {
-    commit(mutation.IS_LOADING_TODOS, true)
-    todoApi.toggleTodo(
-        {'id': item.id, 'name': item.name, 'isComplete': e.target.checked}
-    ).then(() => dispatch('getTodos')).catch(defaultOnError)
+    return new Promise((resolve, reject) => {
+      const onSuccess = (response) => {
+        dispatch('getTodos')
+        resolve(response)
+      }
+
+      const requestbody = {
+        'id': item.id, 'name': item.name, 'isComplete': e.target.checked
+      }
+
+      commit(mutation.IS_LOADING_TODOS, true)
+
+      todoApi.toggleTodo(requestbody)
+        .then(onSuccess)
+        .catch((e) => { reject(e) })
+    })
   },
 
   updateNewTodoName: ({ commit }, e) => {
-    commit(mutation.UPDATE_NEW_TODO_NAME, e.target.value)
+    return new Promise((resolve, reject) => {
+      if (e && e.target && e.target.value) {
+        commit(mutation.UPDATE_NEW_TODO_NAME, e.target.value)
+        resolve(e.target.value)
+        return
+      }
+
+      reject(new Error('Element must be a event target'))
+    })
   }
 }
 

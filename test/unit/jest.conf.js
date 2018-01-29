@@ -25,7 +25,6 @@ module.exports = {
     'src/**/*.{js}',
     '!src/main.js',
     '!src/router/index.js',
-    '!**/node_modules/**',
-    '!src/api/**'
+    '!**/node_modules/**'
   ]
 }
