@@ -68,4 +68,12 @@ describe('Todo page component actions:', () => {
       expect(store.state.todo[1].isComplete).toEqual(false)
     })
   })
+
+  it('Should allow updating todo name', () => {
+    const e = { target: { value: 'a typed todo name' } }
+
+    store.dispatch('updateNewTodoName', e).then(() => {
+      expect(store.state.newTodoName).toEqual('a typed todo name')
+    })
+  })
 })

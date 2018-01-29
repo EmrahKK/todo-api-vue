@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { mount } from 'vue-test-utils'
 import TodoPage from '@/components/Todo/TodoPage'
+import todoModule from '@/store/modules/todo'
 
 Vue.use(Vuex)
 
@@ -12,8 +13,8 @@ describe('Todo page component rendering:', () => {
 
   beforeEach(() => {
     getters = {
-      todoList: state => state.todo,
-      newTodoName: state => state.newTodoName,
+      todoList: todoModule.getters.todoList,
+      newTodoName: todoModule.getters.newTodoName,
       isLoading: state => state.isLoading
     }
 
