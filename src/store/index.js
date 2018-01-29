@@ -4,7 +4,7 @@ import VueResource from 'vue-resource'
 import BootstrapVue from 'bootstrap-vue'
 import todo from './modules/todo'
 import isLoading from './modules/isLoading'
-import notification from './modules/notification'
+import alert from './modules/alert'
 
 Vue.use(Vuex)
 Vue.use(VueResource)
@@ -14,7 +14,7 @@ export default new Vuex.Store({
   modules: {
     todo,
     isLoading,
-    notification
+    alert
   },
   strict: true
 })
