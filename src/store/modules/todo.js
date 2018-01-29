@@ -25,6 +25,8 @@ const mutations = {
   }
 }
 
+const defaultOnError = (e) => { console.error(e) }
+
 const actions = {
   getTodos: ({commit, dispatch}) => {
     const onSuccess = (response) => {
@@ -41,7 +43,7 @@ const actions = {
 
     commit(mutation.IS_LOADING_TODOS, true)
 
-    todoApi.getTodos(onSuccess, onError)
+    todoApi.getTodos().then(onSuccess).catch(onError)
   },
 
   addTodo: ({dispatch, commit, state}) => {
@@ -56,20 +58,21 @@ const actions = {
     }
 
     commit(mutation.IS_LOADING_TODOS, true)
-    todoApi.addTodo({'name': state.newTodoName, 'isCompleted': false}, onSuccess)
+    todoApi.addTodo({'name': state.newTodoName, 'isCompleted': false})
+      .then(onSuccess)
+      .catch(defaultOnError)
   },
 
   removeTodo: ({ dispatch, commit }, item) => {
     commit(mutation.IS_LOADING_TODOS, true)
-    todoApi.removeTodo(item.id, () => dispatch('getTodos'))
+    todoApi.removeTodo(item.id).then(() => dispatch('getTodos')).catch(defaultOnError)
   },
 
   toggleTodo: ({ dispatch, commit, state }, { item, e }) => {
     commit(mutation.IS_LOADING_TODOS, true)
     todoApi.toggleTodo(
-        {'id': item.id, 'name': item.name, 'isComplete': e.target.checked},
-        () => dispatch('getTodos')
-    )
+        {'id': item.id, 'name': item.name, 'isComplete': e.target.checked}
+    ).then(() => dispatch('getTodos')).catch(defaultOnError)
   },
 
   updateNewTodoName: ({ commit }, e) => {

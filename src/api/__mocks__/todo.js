@@ -1,5 +1,3 @@
-const onDefaultError = () => {}
-
 let response = {
   'body': [
     {
@@ -15,35 +13,42 @@ let response = {
   ]
 }
 
+let p = new Promise((resolve, reject) => {
+  resolve(response)
+})
+
 export default {
-  getTodos (onSuccess, onError = onDefaultError) {
-    onSuccess(response)
+  getTodos () {
+    return p
   },
 
-  addTodo (payload, onSuccess, onError = onDefaultError) {
+  addTodo (payload) {
     response.body.push({
       'id': 3,
       'name': 'Mock todo added',
       'isComplete': false
     })
-    onSuccess()
+
+    return p
   },
 
-  removeTodo (id, onSuccess, onError = onDefaultError) {
+  removeTodo (id) {
     response.body.forEach((item, index) => {
       if (item.id === id) {
         delete response.body[index]
       }
     })
-    onSuccess()
+
+    return p
   },
 
-  toggleTodo (payload, onSuccess, onError = onDefaultError) {
+  toggleTodo (requestBody) {
     response.body.forEach((item, index) => {
-      if (item.id === payload.id) {
+      if (item.id === requestBody.id) {
         response.body[index].isComplete = !response.body[index].isComplete
       }
     })
-    onSuccess()
+
+    return p
   }
 }

@@ -11,22 +11,20 @@ var getApiEndpoint = () => {
 
 const endpoint = getApiEndpoint()
 
-const onDefaultError = (e) => console.error(e)
-
 export default {
-  getTodos (onSuccess, onError = onDefaultError) {
-    Vue.http.get(`${endpoint}/todo`).then(onSuccess).catch(onError)
+  getTodos () {
+    return Vue.http.get(`${endpoint}/todo`)
   },
 
-  addTodo (payload, onSuccess, onError = onDefaultError) {
-    Vue.http.post(`${endpoint}/todo`, payload).then(onSuccess).catch(onError)
+  addTodo (requestBody) {
+    return Vue.http.post(`${endpoint}/todo`, requestBody)
   },
 
-  removeTodo (id, onSuccess, onError = onDefaultError) {
-    Vue.http.delete(`${endpoint}/todo/${id}`).then(onSuccess).catch(onError)
+  removeTodo (id) {
+    return Vue.http.delete(`${endpoint}/todo/${id}`)
   },
 
-  toggleTodo (payload, onSuccess, onError = onDefaultError) {
-    Vue.http.put(`${endpoint}/todo/${payload.id}`, payload).then(onSuccess).catch(onError)
+  toggleTodo (requestBody) {
+    return Vue.http.put(`${endpoint}/todo/${requestBody.id}`, requestBody)
   }
 }
