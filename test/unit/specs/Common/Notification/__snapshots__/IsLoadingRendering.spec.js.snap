@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert component rendering: Should render a hidden loading notification 1`] = `
+<div class="loadingElement">
+    Loading...
+</div>
+`;
+
+exports[`Alert component rendering: Should render a visible loading notification 1`] = `
+<div class="loadingElement loading">
+    Loading...
+</div>
+`;

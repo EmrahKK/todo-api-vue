@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert component rendering: Should render a hidden alert 1`] = `
+<div class="statusElement alert alert-info">
+    Some alert message
+</div>
+`;
+
+exports[`Alert component rendering: Should render a visible alert 1`] = `
+<div class="statusElement alert alert-info showing">
+    Some alert message
+</div>
+`;
