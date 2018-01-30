@@ -46,4 +46,35 @@ describe('Alert component actions:', () => {
       expect(store.state.status.showing).toEqual(true)
     })
   })
+
+  it('Should provide a way to hide a notification', () => {
+    store.dispatch(
+      'showNotification',
+      { mutationType: mutation.SHOW_INFO_NOTIFICATION, message: 'Some msg' }
+    ).then((hideNotification) => {
+      expect(store.state.status.showing).toEqual(true)
+
+      hideNotification()
+
+      expect(store.state.status.showing).toEqual(false)
+    })
+  })
+
+  it('Should validate passing correct parameters', () => {
+    store.dispatch('showNotification', {}).catch((e) => {
+      expect(e.message).toEqual('Missing mutationType')
+    })
+
+    store.dispatch('showNotification', {mutationType: 'foo'}).catch((e) => {
+      expect(e.message).toEqual('Missing message')
+    })
+
+    store.dispatch('showNotification', {mutationType: 'foo', message: ''}).catch((e) => {
+      expect(e.message).toEqual('Empty message')
+    })
+
+    store.dispatch('showNotification', {mutationType: 'foo', message: 'foo'}).catch((e) => {
+      expect(e.message).toEqual('Wrong mutationType')
+    })
+  })
 })

@@ -30,18 +30,35 @@ const mutations = {
   }
 }
 
-var hideNotificationDelayed
-
 const actions = {
   showNotification: ({ commit, state }, { mutationType, message }) => {
-    clearTimeout(hideNotificationDelayed)
-    commit(mutationType, message)
-
-    hideNotificationDelayed = setTimeout(() => {
-      if (state.status.showing === true) {
-        commit(mutation.HIDE_NOTIFICATION)
+    return new Promise((resolve, reject) => {
+      if (mutationType === undefined) {
+        reject(new Error('Missing mutationType'))
       }
-    }, 4000)
+
+      if (message === undefined) {
+        reject(new Error('Missing message'))
+      }
+
+      if (message.length < 1) {
+        reject(new Error('Empty message'))
+      }
+
+      if (
+        mutationType === mutation.SHOW_INFO_NOTIFICATION ||
+        mutationType === mutation.SHOW_ERROR_NOTIFICATION
+      ) {
+        commit(mutationType, message)
+        resolve(() => {
+          if (state.status.showing === true) {
+            commit(mutation.HIDE_NOTIFICATION)
+          }
+        })
+      }
+
+      reject(new Error('Wrong mutationType'))
+    })
   }
 }
 

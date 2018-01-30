@@ -34,6 +34,8 @@ const actions = {
 
         dispatch('showNotification', {
           mutationType: mutation.SHOW_INFO_NOTIFICATION, message: 'Loaded TODO list'
+        }).then(hide => {
+          setTimeout(() => { hide() }, 2000)
         })
 
         resolve(response)
